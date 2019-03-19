@@ -11,7 +11,12 @@ Facter.add(:snmpv3_user) do
              when 'Debian'  then '/var/lib/snmp/snmpd.conf'
              when 'FreeBSD' then '/var/net-snmp/snmpd.conf'
              when 'OpenBSD' then '/var/net-snmp/snmpd.conf'
-             when 'RedHat'  then '/var/lib/net-snmp/snmpd.conf'
+             when 'RedHat'  then
+                if Facter.value(:os)['release']['major'] == '5' then
+                  '/var/net-snmp/snmpd.conf'
+                else
+                  '/var/lib/net-snmp/snmpd.conf'
+                end
              when 'Suse'    then '/var/lib/net-snmp/snmpd.conf'
              end
 
